@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'shorten_post' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Original URL</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="url" id="inputEmail3" placeholder="URL" required>
+
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Expired Date</label>
+        <div class="col-sm-10">
+            <input type="datetime-local" name="expiredDate" class="form-control" id="inputPassword3" placeholder="Date">
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary">Shorten</button>
+        </div>
+    </div>
+</form>
+
+<div class="card-footer bg-transparent border-dark mt-3">
+    {% if user.is_authenticated %}
+    <div class="d-flex justify-content-between">
+        <p class="nav-link">Your are logged in as, {{user.username}}</p>
+        <a class="nav-link" href="/logout/">Logout</a>
+    </div>
+    {% else %}
+    <p> Please <a href="/register/">Register</a> to use full potential features.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

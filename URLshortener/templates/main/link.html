@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mdc-card__content">
+    <p>Shortened URL: <a href="{{shortened_url}}">{{shortened_url}}</a></p>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'custom_url' %}" method="post">
+        {% csrf_token %}
+        Customize Url:
+        <input type="text" name="customURL">
+        <input type="hidden" name="shortenURL" value="{{shortened_url}}">
+        <button class="mdc-button mdc-button--outlined" type="submit">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Submit</span>
+        </button>
+        <small class="form-text text-muted">Add only the endpoint of the url, Example: YourName</small>
+        {% if message == 1 %}
+        <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
+            <strong>This url is already in used!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% elif message == 2 %}
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>This url is expired or does not exist!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+    </form>
+    {% endif %}
+
+
+</div>
+<div class="card-footer bg-transparent border-dark mt-3">
+        {% if user.is_authenticated %}
+        <div class="d-flex justify-content-between">
+            <p class="nav-link">Your are logged in as, {{user.username}}</p>
+            <a class="nav-link" href="/logout/">Logout</a>
+        </div>
+        {% else %}
+        <p> Please <a href="/register/">Register</a> to use full potential features.</p>
+        {% endif %}
+    </div>
+{% endblock %}

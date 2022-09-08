@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<h3 class="card-title mb-3">User Registration</h3>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">User Name</label>
+        <div class="col-sm-10">
+            {{ register_form.username }}
+            <small class="form-text text-muted text-left">Username should be unique.</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            {{ register_form.email }}
+            <small class="form-text text-muted text-left">Email should be unique.</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            {{ register_form.password1 }}
+            <small class="form-text text-muted text-left">Password can't be too similar to other personal
+                information, must have 8 character.</small>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Confirm Password</label>
+        <div class="col-sm-10">
+            {{ register_form.password2 }}
+            <small class="form-text text-muted text-left">Enter the same password as before for validation.</small>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </div>
+    <p class="text-center">If you already have an account, <a href="/login/">Login</a> instead.</p>
+</form>
+
+{% endblock %}
